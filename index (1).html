@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ベランダガーデニングロードマップ｜試作版</title>
+<style>
+:root{--bg:#f6f7f2;--card:#fff;--text:#243025;--muted:#6f786f;--g:#5f8f58;--gs:#e8f1e4;--line:#dce3d8;--warn:#b35443;--warnbg:#fff0ea;--amber:#9a732e;--amberbg:#fff8e8}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#f6f7f2,#eef2ea);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--text)}button,input{font:inherit}.app{max-width:430px;margin:auto;min-height:100vh;background:var(--bg)}.screen{display:none;min-height:100vh;padding:calc(env(safe-area-inset-top) + 22px) 18px calc(env(safe-area-inset-bottom) + 28px)}.screen.active{display:block}.tag{font-size:12px;color:var(--g);font-weight:800}h1{font-size:27px;line-height:1.3;margin:8px 0 12px}h2{font-size:21px}.muted{color:var(--muted);font-size:14px;line-height:1.65}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 10px 26px rgba(70,88,68,.08)}.btn{width:100%;border:0;border-radius:16px;padding:15px;font-weight:800;margin-top:10px}.primary{background:var(--g);color:#fff}.ghost{background:#fff;border:1px solid var(--line)}.answer{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border:1.5px solid var(--line);background:#fff;border-radius:16px;margin:9px 0;text-align:left}.answer.sel{border-color:var(--g);background:#f5faf3}.ico{width:40px;height:40px;border-radius:13px;background:var(--gs);display:grid;place-items:center}.progress{height:8px;background:#e4e8e1;border-radius:99px;overflow:hidden;margin:8px 0 22px}.progress span{display:block;height:100%;background:var(--g)}.nav{display:flex;gap:10px}.nav .btn{flex:1}.uploads{display:grid;grid-template-columns:1fr 1fr;gap:10px}.upload{background:#fff;border:1.5px dashed #b9c5b5;border-radius:18px;padding:12px;min-height:148px}.upload input{display:none}.ph{height:88px;border-radius:14px;background:var(--gs);display:grid;place-items:center;font-size:30px;overflow:hidden;margin-bottom:8px}.ph img{width:100%;height:100%;object-fit:cover}.notice{padding:13px;border-radius:16px;background:#edf4e9;margin:12px 0}.warn{padding:14px;border-radius:16px;background:var(--warnbg);border:1px solid #efc5ba;margin:10px 0}.caution{padding:14px;border-radius:16px;background:var(--amberbg);border:1px solid #ead9a5;margin:10px 0}.loading{text-align:center;padding-top:25vh}.sprout{font-size:74px;animation:pulse 1.2s infinite}@keyframes pulse{50%{transform:scale(1.08)}}.swipe{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px}.slide{min-width:100%;scroll-snap-align:start}.mockimg{height:205px;border-radius:22px;background:linear-gradient(#dce9d8 0 58%,#d7c2a3 59%);display:flex;align-items:end;justify-content:center;padding-bottom:25px;font-size:60px}.future{background:linear-gradient(#d5e6cf 0 52%,#cfba98 53%)}.todo{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #edf0eb}.homehead{padding-top:8px}.pill{display:inline-block;background:var(--gs);padding:6px 10px;border-radius:999px;font-size:12px;margin:3px}
+</style>
+</head>
+<body><div class="app">
+<section id="start" class="screen active"><div class="tag">ベランダガーデニングロードマップ</div><div class="card"><h1>ベランダガーデニングを、無理なくはじめよう 🌱</h1><p>今あるものを活かしながら、あなたのベランダに合った「最初の一歩」を一緒に考えます。</p><div class="mockimg">🪴🌿</div><button class="btn primary" onclick="go('q')">ガーデンプランを作る</button><p class="muted">スマホ操作を前提にした試作版です。写真は任意です。</p></div></section>
+
+<section id="q" class="screen"><div class="tag" id="qcount"></div><div class="progress"><span id="bar"></span></div><h1 id="qt"></h1><div id="choices"></div><div class="nav"><button class="btn ghost" onclick="prevQ()">戻る</button><button class="btn primary" onclick="nextQ()">次へ</button></div></section>
+
+<section id="photos" class="screen"><div class="tag">写真アップロード</div><h1>今あるものを見せてください</h1><p class="muted">スマホでその場から撮影・選択できます。写真なしでも進めますが、写真があると今ある鉢・植物・置けそうな場所・安全面をより正確に確認できるためおすすめです。</p><div class="uploads">
+<label class="upload"><div class="ph" id="p1">📷</div><b>ベランダ全体</b><br><span class="muted">おすすめ：1枚以上</span><input id="f1" type="file" accept="image/*" capture="environment" onchange="preview(event,'p1')"></label>
+<label class="upload"><div class="ph" id="p2">🪴</div><b>鉢・プランター</b><br><span class="muted">任意</span><input type="file" accept="image/*" capture="environment" onchange="preview(event,'p2')"></label>
+<label class="upload"><div class="ph" id="p3">🌿</div><b>今ある植物</b><br><span class="muted">任意</span><input type="file" accept="image/*" capture="environment" onchange="preview(event,'p3')"></label>
+<label class="upload"><div class="ph" id="p4">✂️</div><b>園芸道具</b><br><span class="muted">任意</span><input type="file" accept="image/*" capture="environment" onchange="preview(event,'p4')"></label>
+</div><div id="photoMsg" class="notice">写真なしでも進めます。写真があると、今ある鉢・植物・置けそうな場所・安全面をより正確に確認できます。</div><div class="nav"><button class="btn ghost" onclick="go('q')">戻る</button><button class="btn primary" onclick="toAnalysis()">次へ</button></div></section>
+
+<section id="analysis" class="screen"><div class="tag">入力内容の確認</div><h1 id="analysisTitle">入力内容を確認しました</h1><div class="notice" id="analysisNotice"></div><div class="card"><b id="analysisCardTitle">本番版で確認する項目</b><p class="muted" id="analysisCardText"></p></div><button class="btn primary" onclick="startPlan()">試作プラン生成へ進む</button></section>
+
+<section id="loading" class="screen"><div class="loading"><div class="sprout">🌱</div><h2 id="loadtxt">日当たりを確認しています…</h2><p class="muted">安全 → 育てやすさ → 手持ち活用 → 予算 → 見た目 の順で考えます。</p></div></section>
+
+<section id="ready" class="screen"><div class="loading"><div style="font-size:60px">🌿</div><h1>あなたのガーデンプランができました</h1><button class="btn primary" onclick="go('result')">結果はこちら</button></div></section>
+
+<section id="result" class="screen"><div class="tag">あなたのガーデンプラン</div><h1>まずは、ここまで。</h1><div class="swipe"><div class="slide"><b>まずここまで</b><div class="mockimg">🪴 🌿 🪴</div></div><div class="slide"><b>将来こんな感じ</b><div class="mockimg future">🌿 🪴 🌿 🌸</div></div></div><p class="muted" style="text-align:center">左右にスワイプして比較できます。</p><div class="card"><h2>小さなナチュラルガーデン</h2><span class="pill">手入れ少なめ</span><span class="pill">手持ち活用</span><span class="pill">初心者向け</span></div><div class="card"><h2>配置について</h2><p class="muted">第1号では配置図を簡略化しています。本番版では日照・風・動線・避難設備・室外機・排水・子どもの安全条件を使って配置を決めます。</p></div><div class="warn"><b>🔴 必ず確認</b><ul><li>小さい子どもがいる場合、手すり付近に鉢・棚・椅子・収納・スタンドなど<strong>足掛かりになる物を置かない</strong>。</li><li>鉢や道具を手すり上・高所に置かず、落下・転倒を防ぐ。</li><li>避難ハッチ・避難経路を塞がない。</li></ul></div><div class="caution"><b>🟡 できれば注意</b><ul><li>排水口を塞がない。</li><li>室外機の吸排気を妨げない。</li><li>強風時の転倒・飛散を確認する。</li></ul></div><div class="card"><h2>今日のTODO</h2><label class="todo"><input type="checkbox" onchange="checkDone()">まず置き場所を確認する</label><label class="todo"><input type="checkbox" onchange="checkDone()">必要な鉢を確認する</label><div id="done" class="notice" style="display:none">今日はここまででOK 🌿</div></div><button class="btn primary" onclick="go('home')">ホームへ</button></section>
+
+<section id="home" class="screen"><div class="homehead"><div class="tag">ホーム</div><h1>こんにちは 🌿</h1><p class="muted">3 / 7 ステップ完了 🌱</p></div><div class="card"><h2>今日のTODO</h2><div class="todo">□ 置き場所を確認する</div><div class="todo">□ 鉢を確認する</div></div><div class="card"><b>🌱 わたしのガーデンプラン</b><p class="muted">小さなナチュラルガーデン</p><button class="btn ghost" onclick="go('result')">プランを見る</button></div><div class="card"><b>＋ 次の植物を考える</b><p class="muted">第2段階で実装予定</p></div><div class="card"><b>🌿 わたしのベランダ日和</b><p class="muted">植物と過ごした時間を、ゆっくりと。</p></div><button class="btn ghost" onclick="resetAll()">最初から試す</button></section>
+</div>
+<script>
+const Q=[
+['ベランダガーデニングで、まず何を楽しみたいですか？',[['🌸','花'],['🌿','緑のある暮らし'],['🥬','野菜・ハーブ'],['🤔','まだ分からない']]],
+['日が当たる時間帯は？',[['🌅','朝〜昼'],['🌇','昼〜夕方'],['☀️','一日かなり'],['☁️','あまり当たらない'],['❓','分からない']]],
+['ベランダの横幅はどのくらい？',[['↔️','両手を広げた幅の半分'],['🙆','1倍くらい'],['📏','1.5倍くらい'],['🏠','2倍以上'],['❓','後で確認']]],
+['奥行きはどのくらい？',[['👣','半歩'],['🚶','1歩'],['🚶‍♂️','1.5〜2歩'],['↔️','2歩以上'],['❓','後で確認']]],
+['風はどのくらい強いですか？',[['🍃','あまり強くない'],['🌬️','ときどき強い'],['💨','かなり強い'],['🍂','季節で違う'],['❓','分からない']]],
+['植物を置かない方がよい場所はありますか？',[['❄️','室外機'],['🚪','避難ハッチ・経路'],['💧','排水口'],['✅','特にない'],['❓','分からない']]],
+['お世話はどれくらいなら続けられそうですか？',[['🫧','できるだけ少なく'],['🗓️','2〜3日に1回'],['💧','毎日少し'],['🌿','週末中心'],['❓','分からない']]],
+['今回の予算感は？',[['0️⃣','できるだけ0円'],['💴','〜3,000円'],['💴','〜5,000円'],['💴','〜10,000円'],['❓','まだ決めていない']]],
+['今あるものは？',[['🌿','植物'],['🪴','鉢・プランター'],['✂️','園芸道具'],['📦','特にない']]],
+['好きな雰囲気は？',[['🌳','緑が多く自然'],['🌸','花があって明るい'],['◻️','すっきりシンプル'],['🥬','野菜・ハーブ中心'],['❓','まだ分からない']]],
+['お住まいの地域は？',[['🗾','北海道・東北'],['🗾','関東・甲信越'],['🗾','東海・北陸・近畿'],['🗾','中国・四国'],['🗾','九州・沖縄'],['…','答えたくない']]],
+['小さい子どもやペットはいますか？',[['🧒','小さい子ども'],['🐾','ペット'],['👨‍👩‍👧','両方'],['🏡','どちらもいない'],['…','答えたくない']]]
+];
+let qi=+(localStorage.bg_qi||0),A=JSON.parse(localStorage.bg_a||'{}');
+function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo(0,0);if(id==='q')renderQ()}
+function renderQ(){let q=Q[qi];qcount.textContent=`質問 ${qi+1}/12`;bar.style.width=((qi+1)/12*100)+'%';qt.textContent=q[0];choices.innerHTML=q[1].map((c,i)=>`<button class="answer ${A[qi]===i?'sel':''}" onclick="sel(${i})"><span class="ico">${c[0]}</span>${c[1]}</button>`).join('')}
+function sel(i){A[qi]=i;localStorage.bg_a=JSON.stringify(A);renderQ()}
+function nextQ(){if(A[qi]===undefined){alert('ひとつ選んでください');return}if(qi<11){qi++;localStorage.bg_qi=qi;renderQ()}else go('photos')}
+function prevQ(){if(qi>0){qi--;localStorage.bg_qi=qi;renderQ()}else go('start')}
+function preview(e,id){let f=e.target.files[0];if(!f)return;let im=document.createElement('img');im.src=URL.createObjectURL(f);let p=document.getElementById(id);p.innerHTML='';p.appendChild(im)}
+function toAnalysis(){
+  const hasPhoto = document.getElementById('f1').files.length > 0;
+  go('analysis');
+  if(hasPhoto){
+    analysisTitle.textContent='写真を受け取りました';
+    analysisNotice.innerHTML='<b>この公開試作版では、本物のAI画像解析はまだ接続していません。</b><br><span class="muted">本番版では、アップロードした写真から確認できた内容だけを分析します。写真から判断できないことは、勝手に補わず確認を求めます。</span>';
+    analysisCardTitle.textContent='写真がある場合に確認する項目';
+    analysisCardText.textContent='鉢・プランター／現在の植物／道具／置けそうな場所／室外機・避難ハッチ・排水口などの注意エリア';
+  }else{
+    analysisTitle.textContent='写真なしで進めます';
+    analysisNotice.innerHTML='<b>写真は追加されていません。</b><br><span class="muted">この場合は、これまでの12問への回答だけを使ってプランを作ります。写真を見たふりをして、鉢・植物・置き場所などを推測することはありません。</span>';
+    analysisCardTitle.textContent='写真があると、より分かること';
+    analysisCardText.textContent='手持ちの鉢や植物、道具、置けそうな場所、室外機・避難ハッチ・排水口などの安全面を、より具体的に確認できます。';
+  }
+}
+function startPlan(){go('loading');let s=['日当たりを確認しています…','風や安全面を確認しています…','手持ち品を活かせるか見ています…','予算に合う植物を考えています…','配置を整えています…'],i=0;loadtxt.textContent=s[0];let t=setInterval(()=>{i++;if(i>=s.length){clearInterval(t);setTimeout(()=>go('ready'),350)}else loadtxt.textContent=s[i]},700)}
+function checkDone(){let all=[...document.querySelectorAll('#result input[type=checkbox]')].every(x=>x.checked);done.style.display=all?'block':'none'}
+function resetAll(){localStorage.clear();qi=0;A={};go('start')}
+renderQ();
+</script></body></html>
